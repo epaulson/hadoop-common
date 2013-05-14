@@ -2075,7 +2075,12 @@ public class MiniDFSCluster {
    * @return the base directory for this instance.
    */
   protected String determineDfsBaseDir() {
-    String dfsdir = conf.get(HDFS_MINIDFS_BASEDIR, null);
+    String dfsdir = null;
+    if(conf != null ) {
+      dfsdir = conf.get(HDFS_MINIDFS_BASEDIR, null);
+    } else {
+      LOG.info("conf is null");
+    }
     if (dfsdir == null) {
       dfsdir = getBaseDirectory();
     }
@@ -2342,9 +2347,9 @@ public class MiniDFSCluster {
         conf.setIfUnset(DFS_DATANODE_HTTP_ADDRESS_KEY, "127.0.0.1:0");
         conf.setIfUnset(DFS_DATANODE_IPC_ADDRESS_KEY, "127.0.0.1:0");
       } else {
-        conf.set(DFS_DATANODE_ADDRESS_KEY, "127.0.0.1:0");
-        conf.set(DFS_DATANODE_HTTP_ADDRESS_KEY, "127.0.0.1:0");
-        conf.set(DFS_DATANODE_IPC_ADDRESS_KEY, "127.0.0.1:0");
+        conf.set(DFS_DATANODE_ADDRESS_KEY, "0.0.0.0:0");
+        conf.set(DFS_DATANODE_HTTP_ADDRESS_KEY, "0.0.0.0:0");
+        conf.set(DFS_DATANODE_IPC_ADDRESS_KEY, "0.0.0.0:0");
       }
     }
   }
